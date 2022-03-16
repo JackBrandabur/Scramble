@@ -10,18 +10,22 @@ public class GUI implements ActionListener {
 	
 	JFrame frame = new JFrame("Scramble");
 	
-	JPanel panel1 = new JPanel(new FlowLayout(2,2,2));
+	JPanel panel1 = new JPanel();
 	JPanel panel2 = new JPanel();
-	JPanel panel3 = new JPanel();
+	JPanel panel3 = new JPanel(new BorderLayout());
+	JPanel panel4 = new JPanel();
 	
-	JButton FilterButton = new JButton("Filter");
+	JLabel user = new JLabel("Username: ");
+	JLabel pass = new JLabel("Password: ");
+	
 	JButton LoginButton = new JButton("Login");
 	JButton SignupButton = new JButton("Sign-Up");
-	JButton PantryButton = new JButton("Virtual Pantry");
 	
-	JTextField SearchBar = new JTextField("Search Recipes");
+	JTextField username = new JTextField();
+	JTextField password = new JTextField();
 	
 	JToolBar toolBar = new JToolBar();
+	JToolBar loginBar = new JToolBar();
 	
 	/**
 	 * Constructor for creating the initial menu.
@@ -30,29 +34,40 @@ public class GUI implements ActionListener {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//SearchBar.setSize(200,50);
-		
 		// Action to open the virtual pantry GUI
-		PantryButton.addActionListener(this);
+		//PantryButton.addActionListener(this);
+		
+		SignupButton.setPreferredSize(new Dimension(200,50));
+		LoginButton.setPreferredSize(new Dimension(200,50));
+		loginBar.add(SignupButton, BorderLayout.EAST);
+		loginBar.add(LoginButton, BorderLayout.WEST);
+		loginBar.setBackground(Color.BLUE);
+		loginBar.setPreferredSize(new Dimension(200,50));
+		loginBar.setFloatable(false);
+		
+		username.setColumns(10);
+		password.setColumns(10);
+		
+		panel1.add(loginBar);
+		panel2.add(user);
+		panel2.add(username, BorderLayout.CENTER);
+		panel4.add(pass);
+		panel4.add(password, BorderLayout.SOUTH);
 		
 		//
-		toolBar.add(FilterButton);
-		//toolBar.add(SearchBar);
-		toolBar.add(LoginButton);
-		toolBar.add(SignupButton);
-		toolBar.add(PantryButton);
-		toolBar.setBackground(Color.BLUE);
-		toolBar.setFloatable(false);
+		panel3.add(panel1, BorderLayout.NORTH);
+		panel3.add(panel2, BorderLayout.CENTER);
+		panel3.add(panel4, BorderLayout.SOUTH);
+		
 		
 		//
-		panel3.setLayout(new BoxLayout(panel3, BoxLayout.PAGE_AXIS));
-		panel3.add(toolBar);
-		panel3.add(panel2);
 		
+		LoginButton.addActionListener(this);
 		
 		//
 		frame.add(panel3);
-		frame.setSize(1000, 500);
+		frame.add(panel3);
+		frame.setSize(400, 150);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -60,12 +75,22 @@ public class GUI implements ActionListener {
 	public static void main(String[] args) {
 		GUI gui = new GUI();
 	}
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == PantryButton) {
-			Pantry myPantry = new Pantry();
+//		if(e.getSource() == PantryButton) {
+//			Pantry myPantry = new Pantry();
+//		}
+		if (e.getSource() == LoginButton) {
+			String userEmail = username.getText();
+			String userPassword = password.getText();
+			System.out.println(userEmail);
+			System.out.println(userPassword);
 		}
 		
 	}
+	
+	
 }
