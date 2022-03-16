@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class User {
-	public static void main (String[] args) {
-		//createAccount("Brandajj@miamioh,edu","testPassword");
-		//System.out.println(login("Brandajj@miamioh.edu", "testPassword);
-	}
+//	public static void main (String[] args) {
+//		createAccount("Brandajj@miamioh,edu","testPassword");
+//		System.out.println(login("Brandajj@miamioh.edu", "testPassword"));
+//	}
 	
 	public static boolean login(String userName, String password) {
 		userName = userName.toLowerCase();

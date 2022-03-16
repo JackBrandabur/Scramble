@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 public class Search {
 	public static void main (String[] args) {
-		search("french toast", false);
+		ArrayList<String> recipes = search("French Toast", false);
+		System.out.println(recipes.toString());
 	} 
 	
 	public static ArrayList <String> search(String item, boolean ingredient) {
 		ArrayList <String> recipes = new ArrayList<String>();
+		item = item.toLowerCase();
 		try {
 			Scanner fileReader = new Scanner(new File("Recipes.txt"));
 			if (ingredient) {
@@ -108,8 +110,8 @@ public class Search {
 			e.printStackTrace();
 			System.out.println("Error in ending");
 		}
-		System.out.println(recipes.toString());
-		System.out.println(recipeSteps.toString());
+		//System.out.println(recipes.toString());
+		//System.out.println(recipeSteps.toString());
 		return recipeSteps;
 	}
 }

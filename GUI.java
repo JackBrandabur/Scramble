@@ -17,14 +17,15 @@ public class GUI implements ActionListener {
 	
 	JLabel user = new JLabel("Username: ");
 	JLabel pass = new JLabel("Password: ");
+	JLabel guest = new JLabel("Search as Guest: ");
 	
 	JButton LoginButton = new JButton("Login");
 	JButton SignupButton = new JButton("Sign-Up");
+	JButton GuestButton = new JButton("Guest");
 	
 	JTextField username = new JTextField();
 	JTextField password = new JTextField();
 	
-	JToolBar toolBar = new JToolBar();
 	JToolBar loginBar = new JToolBar();
 	
 	/**
@@ -34,13 +35,12 @@ public class GUI implements ActionListener {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// Action to open the virtual pantry GUI
-		//PantryButton.addActionListener(this);
-		
 		SignupButton.setPreferredSize(new Dimension(200,50));
 		LoginButton.setPreferredSize(new Dimension(200,50));
-		loginBar.add(SignupButton, BorderLayout.EAST);
+		GuestButton.setPreferredSize(new Dimension(200,50));
+		loginBar.add(SignupButton, BorderLayout.CENTER);
 		loginBar.add(LoginButton, BorderLayout.WEST);
+		loginBar.add(GuestButton, BorderLayout.EAST);
 		loginBar.setBackground(Color.BLUE);
 		loginBar.setPreferredSize(new Dimension(200,50));
 		loginBar.setFloatable(false);
@@ -63,11 +63,13 @@ public class GUI implements ActionListener {
 		//
 		
 		LoginButton.addActionListener(this);
+		SignupButton.addActionListener(this);
+		GuestButton.addActionListener(this);
 		
 		//
 		frame.add(panel3);
 		frame.add(panel3);
-		frame.setSize(400, 150);
+		frame.setSize(300, 150);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -80,16 +82,23 @@ public class GUI implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if(e.getSource() == PantryButton) {
-//			Pantry myPantry = new Pantry();
-//		}
 		if (e.getSource() == LoginButton) {
 			String userEmail = username.getText();
 			String userPassword = password.getText();
-			System.out.println(userEmail);
-			System.out.println(userPassword);
+			if (User.login(userEmail, userPassword)) {
+				MainMenu menu = new MainMenu();
+				frame.setVisible(false);
+			}
 		}
-		
+		if (e.getSource() == SignupButton) {
+			String userEmail = username.getText();
+			String userPassword = password.getText();
+			User.createAccount(userEmail, userPassword);
+		}
+		if (e.getSource() == GuestButton) {
+			MainMenu menu = new MainMenu();
+			frame.setVisible(false);
+		}
 	}
 	
 	
