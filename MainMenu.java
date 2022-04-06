@@ -3,7 +3,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,11 +33,23 @@ public class MainMenu implements ActionListener {
 	JButton PantryButton = new JButton("Virtual Pantry");
 	JButton SearchButton = new JButton("Search");
 	
+	JCheckBox allergy = new JCheckBox("Allergy");
+	JCheckBox region = new JCheckBox("Regional");
+	
+	ButtonGroup buttons = new ButtonGroup();
+	
+	JLabel filters = new JLabel("  Filters:");
+	
 	MainMenu() {
 		toolBar.add(ReturnButton);
 		ReturnButton.addActionListener(this);
 		toolBar.add(PantryButton);
 		PantryButton.addActionListener(this);
+		buttons.add(allergy);
+		buttons.add(region);
+		toolBar.add(filters);
+		toolBar.add(allergy);
+		toolBar.add(region);
 		panel2.add(toolBar);
 		
 		searchBar.setColumns(20);
@@ -66,7 +80,7 @@ public class MainMenu implements ActionListener {
 		}
 		if (e.getSource() == SearchButton) {
 			String searchItem = searchBar.getText();
-			System.out.println(searchItem);
+			area.setText(null);
 			ArrayList<String> recipes = Search.search(searchItem, false);
 			for (int i = 0; i < recipes.size(); i++) {
 				area.append(recipes.get(i));

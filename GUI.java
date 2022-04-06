@@ -24,7 +24,7 @@ public class GUI implements ActionListener {
 	JButton GuestButton = new JButton("Guest");
 	
 	JTextField username = new JTextField();
-	JTextField password = new JTextField();
+	JPasswordField password = new JPasswordField();
 	
 	JToolBar loginBar = new JToolBar();
 	
