@@ -17,11 +17,18 @@ import javax.swing.JToolBar;
 public class MainMenu implements ActionListener {
 	JFrame mainmenu = new JFrame("Scramble - Main Menu");
 	
+	JButton ReturnButton = new JButton ("Logout");
+	JButton PantryButton = new JButton("Virtual Pantry");
+	JButton SearchButton = new JButton("Search");
+	
 	JToolBar toolBar = new JToolBar();
 	
 	JPanel panel1 = new JPanel(new BorderLayout());
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
+	
+	int found = 0;
+	JLabel resultsFound = new JLabel("Recipes Found: " + found);
 	
 	JLabel searchLabel = new JLabel("Search Recipes");
 	JTextField searchBar = new JTextField();
@@ -29,16 +36,14 @@ public class MainMenu implements ActionListener {
 	JTextArea area = new JTextArea(5,10);
 	JScrollPane pane = new JScrollPane(area);
 	
-	JButton ReturnButton = new JButton ("Logout");
-	JButton PantryButton = new JButton("Virtual Pantry");
-	JButton SearchButton = new JButton("Search");
-	
 	JCheckBox allergy = new JCheckBox("Allergy");
 	JCheckBox region = new JCheckBox("Regional");
 	
 	ButtonGroup buttons = new ButtonGroup();
 	
 	JLabel filters = new JLabel("  Filters:");
+	
+	
 	
 	MainMenu() {
 		toolBar.add(ReturnButton);
@@ -54,6 +59,7 @@ public class MainMenu implements ActionListener {
 		
 		searchBar.setColumns(20);
 		panel3.add(searchLabel);
+		panel3.add(resultsFound);
 		panel3.add(searchBar);
 		panel3.add(SearchButton);
 		SearchButton.addActionListener(this);
@@ -64,7 +70,7 @@ public class MainMenu implements ActionListener {
 		
 		mainmenu.add(panel1);
 		mainmenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainmenu.setSize(500,500);
+		mainmenu.setSize(600,500);
 		mainmenu.setLocationRelativeTo(null);
 		mainmenu.setVisible(true);
 	}
@@ -86,6 +92,8 @@ public class MainMenu implements ActionListener {
 				area.append(recipes.get(i));
 				area.append("\n");
 			}
+			found = 1;
+			resultsFound.setText("Recipes Found: " + found);
 		}
 	}
 }
