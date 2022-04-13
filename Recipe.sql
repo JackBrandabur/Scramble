@@ -29,8 +29,7 @@ GO
 /****** Object:  Table Users     ******/
 CREATE TABLE Users(
 	UserID int IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	UserFirstName nvarchar(50) NULL,
-	UserLastName nvarchar(50) NOT NULL,
+	UserName nvarchar(50) NOT NULL,
 	UserPassWord nvarchar(max) Not NULL
 	
 	
@@ -70,12 +69,12 @@ GO
 
 
 SET IDENTITY_INSERT Users ON 
-INSERT Users (UserID, UserFirstName, UserLastName, UserPassWord) VALUES 
-(1, 'Korah', 'Blanca', '6145553928'),
-(2, 'Yash', 'Randall', '2095552262'),
-(3, 'Johnathon', 'Millerton', '2125554800', NULL),
-(4, 'Mikayla', 'Damion', '2025555561', NULL),
-(5, 'Kendall', 'Mayte', '5135553043', NULL)
+INSERT Users (UserID, UserName, UserPassWord) VALUES 
+(1, 'Blanca', '6145553928'),
+(2, 'Randall', '2095552262'),
+(3, 'Millerton', '2125554800', NULL),
+(4, 'Damion', '2025555561', NULL),
+(5, 'Mayte', '5135553043', NULL)
 
 SET IDENTITY_INSERT Users OFF
 GO
