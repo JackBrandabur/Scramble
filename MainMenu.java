@@ -36,8 +36,8 @@ public class MainMenu implements ActionListener {
 	JTextArea area = new JTextArea(5,10);
 	JScrollPane pane = new JScrollPane(area);
 	
-	JCheckBox allergy = new JCheckBox("Allergy");
-	JCheckBox region = new JCheckBox("Regional");
+	JCheckBox numberOfIngredients = new JCheckBox("Number Of Ingredients");
+	JCheckBox prepTime = new JCheckBox("Prep Time");
 	
 	ButtonGroup buttons = new ButtonGroup();
 	
@@ -50,11 +50,11 @@ public class MainMenu implements ActionListener {
 		ReturnButton.addActionListener(this);
 		toolBar.add(PantryButton);
 		PantryButton.addActionListener(this);
-		buttons.add(allergy);
-		buttons.add(region);
+		buttons.add(numberOfIngredients);
+		buttons.add(prepTime);
 		toolBar.add(filters);
-		toolBar.add(allergy);
-		toolBar.add(region);
+		toolBar.add(numberOfIngredients);
+		toolBar.add(prepTime);
 		panel2.add(toolBar);
 		
 		searchBar.setColumns(20);
@@ -87,12 +87,19 @@ public class MainMenu implements ActionListener {
 		if (e.getSource() == SearchButton) {
 			String searchItem = searchBar.getText();
 			area.setText(null);
-			ArrayList<String> recipes = Search.search(searchItem, false);
+			//
+			// Search parameters are searchItem - recipe name, Filter - number of ingredients should be 1, 
+			//prep time should be 2, anything else will be unsorted, last parameter is an arraylist of all ingredients in pantry
+			ArrayList<String> recipesTest = new ArrayList<String>();
+			//recipesTest.add("milk");
+			ArrayList<String> recipes = Search.search(searchItem, 1, recipesTest);
+			//
+			
 			for (int i = 0; i < recipes.size(); i++) {
 				area.append(recipes.get(i));
+				if (recipes.get(i).contains("Servings:")) found++;
 				area.append("\n");
 			}
-			found = 1;
 			resultsFound.setText("Recipes Found: " + found);
 		}
 	}
