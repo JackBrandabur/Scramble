@@ -20,6 +20,7 @@ public class MainMenu implements ActionListener {
 	JButton ReturnButton = new JButton ("Logout");
 	JButton PantryButton = new JButton("Virtual Pantry");
 	JButton SearchButton = new JButton("Search");
+	JButton addRecipe = new JButton("Add Recipe");
 	
 	JToolBar toolBar = new JToolBar();
 	
@@ -38,6 +39,7 @@ public class MainMenu implements ActionListener {
 	
 	JCheckBox numberOfIngredients = new JCheckBox("Number Of Ingredients");
 	JCheckBox prepTime = new JCheckBox("Prep Time");
+	JCheckBox ingredientsFilter = new JCheckBox("Selected Pantry Ingredients");
 	
 	ButtonGroup buttons = new ButtonGroup();
 	
@@ -46,6 +48,12 @@ public class MainMenu implements ActionListener {
 	
 	
 	MainMenu() {
+		
+		numberOfIngredients.addActionListener(this);
+		prepTime.addActionListener(this);
+		ingredientsFilter.addActionListener(this);
+		addRecipe.addActionListener(this);
+		
 		toolBar.add(ReturnButton);
 		ReturnButton.addActionListener(this);
 		toolBar.add(PantryButton);
@@ -55,13 +63,15 @@ public class MainMenu implements ActionListener {
 		toolBar.add(filters);
 		toolBar.add(numberOfIngredients);
 		toolBar.add(prepTime);
+		toolBar.add(ingredientsFilter);
 		panel2.add(toolBar);
 		
 		searchBar.setColumns(20);
+		panel3.add(addRecipe);
 		panel3.add(searchLabel);
-		panel3.add(resultsFound);
 		panel3.add(searchBar);
 		panel3.add(SearchButton);
+		panel3.add(resultsFound);
 		SearchButton.addActionListener(this);
 		
 		panel1.add(panel2, BorderLayout.NORTH);
@@ -70,7 +80,7 @@ public class MainMenu implements ActionListener {
 		
 		mainmenu.add(panel1);
 		mainmenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainmenu.setSize(600,500);
+		mainmenu.setSize(750,500);
 		mainmenu.setLocationRelativeTo(null);
 		mainmenu.setVisible(true);
 	}
@@ -85,14 +95,33 @@ public class MainMenu implements ActionListener {
 			mainmenu.setVisible(false);
 		}
 		if (e.getSource() == SearchButton) {
+			int filter = 0;
+			boolean pantryIngredients = false;
+			if (numberOfIngredients.isSelected()) {
+				filter = 1;
+			}
+			if (prepTime.isSelected()) {
+				filter = 2;
+			}
+			if (ingredientsFilter.isSelected()) {
+				pantryIngredients = true;
+			}
+			
 			String searchItem = searchBar.getText();
 			area.setText(null);
+			found = 0;
+			resultsFound.setText("Recipes Found: " + found);
 			//
 			// Search parameters are searchItem - recipe name, Filter - number of ingredients should be 1, 
 			//prep time should be 2, anything else will be unsorted, last parameter is an arraylist of all ingredients in pantry
-			ArrayList<String> recipesTest = new ArrayList<String>();
+			ArrayList<String> emptyIngredients = new ArrayList<String>();
+			ArrayList<String> recipes = new ArrayList<String>();
 			//recipesTest.add("milk");
-			ArrayList<String> recipes = Search.search(searchItem, 1, recipesTest);
+			if (pantryIngredients) {
+				recipes = Search.search(searchItem, filter, Pantry.ingredientsList);
+			} else {
+				recipes = Search.search(searchItem, filter, emptyIngredients);
+			}
 			//
 			
 			for (int i = 0; i < recipes.size(); i++) {
@@ -100,7 +129,12 @@ public class MainMenu implements ActionListener {
 				if (recipes.get(i).contains("Servings:")) found++;
 				area.append("\n");
 			}
+			area.setCaretPosition(0);
 			resultsFound.setText("Recipes Found: " + found);
+		}
+		if (e.getSource() == addRecipe) {
+			AddRecipe addRecipe = new AddRecipe();
+			mainmenu.setVisible(false);
 		}
 	}
 }
