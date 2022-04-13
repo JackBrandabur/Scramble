@@ -1,11 +1,12 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class Pantry implements ActionListener {
-
+	public static ArrayList<String> ingredientsList = new ArrayList<String>();
 	JFrame pantry = new JFrame("Scramble - Pantry");
 	
 	JTextField addField = new JTextField(10);
@@ -36,13 +37,20 @@ public class Pantry implements ActionListener {
 	JButton save = new JButton("Save Pantry");
 	JButton add2 = new JButton("Add Ingredient");
 	JButton save2 = new JButton("Save Filters");
+	JButton clear = new JButton("Clear Filters");
 	
-	Pantry() {
+	Pantry(ArrayList<String> ingredientsList) {
+		
+		for (int i = 0; i < ingredientsList.size(); i++) {
+			savedArea.append(ingredientsList.get(i));
+			savedArea.append("\n");
+		}
 		
 		ret.addActionListener(this);
 		add.addActionListener(this);
 		save.addActionListener(this);
 		add2.addActionListener(this);
+		clear.addActionListener(this);
 		
 		toolBar2.add(ret);
 		toolBar2.add(add);
@@ -50,6 +58,7 @@ public class Pantry implements ActionListener {
 		
 		toolBar3.add(add2);
 		toolBar3.add(save2);
+		toolBar3.add(clear);
 		
 		panel.add(toolBar, BorderLayout.NORTH);
 		panel.add(toolBar2, BorderLayout.SOUTH);
@@ -85,8 +94,13 @@ public class Pantry implements ActionListener {
 		}
 		if (e.getSource() == add2) {
 			String item = addIng.getText();
+			ingredientsList.add(item);
 			savedArea.append(item);
 			savedArea.append("\n");
+		}
+		if (e.getSource() == clear) {
+			ingredientsList = new ArrayList<String>();
+			savedArea.setText(null);
 		}
 	}
 	

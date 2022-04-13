@@ -91,7 +91,7 @@ public class MainMenu implements ActionListener {
 			mainmenu.setVisible(false);
 		}
 		if (e.getSource() == PantryButton) {
-			Pantry pantry = new Pantry();
+			Pantry pantry = new Pantry(Pantry.ingredientsList);
 			mainmenu.setVisible(false);
 		}
 		if (e.getSource() == SearchButton) {
