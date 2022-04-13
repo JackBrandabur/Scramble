@@ -12,27 +12,16 @@ public class User {
 	//}
 	
 	public static boolean login(String userName, String password) {
-		/*userName = userName.toLowerCase();
-		try {
-			Scanner fileReader = new Scanner(new File("UserInfo.txt"));
-			while (fileReader.hasNextLine()) {
-				if (fileReader.nextLine().equals(userName + " " + password)) {
-					return true;
-				}
-			}
-			System.out.println("Username or password incorrect.");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return false;*/
 		userName = userName.toLowerCase();
 		Connection myConn;
 		try {
 			myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
 			Statement mystmt = myConn.createStatement();
-			ResultSet myRs = mystmt.executeQuery("select * from Users where UserName = '" + userName + "' and password = '" + password + "'");
-			if(!(myRs.toString().equals(""))) {
-				return true;
+			ResultSet myRs = mystmt.executeQuery("Select * from Users");
+			while (myRs.next()) {
+				if (myRs.getString("Username").equals(userName) && myRs.getString("password").equals(password)) {
+					return true;
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -57,26 +46,5 @@ public class User {
 			e.printStackTrace();
 		}
 		return false;
-		/*try {
-			Scanner fileReader = new Scanner(new File("UserInfo.txt"));
-			while (fileReader.hasNextLine()) {
-				if (fileReader.nextLine().equals(userName + " " + password)) {
-					System.out.println("Account already exists");
-					return false;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			File userInfo = new File("UserInfo.txt");
-		}
-		try {
-			FileWriter fileWriter = new FileWriter("UserInfo.txt", true);
-			fileWriter.write(userName + " " + password + System.lineSeparator());
-			fileWriter.close();
-		} catch (IOException e) {
-			System.out.println("Error occured trying to write to file");
-			return false;
-		}
-		
-		return true;*/
 	}
 }
