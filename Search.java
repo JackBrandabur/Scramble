@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Search {
 	public static void main (String[] args) {
-		ArrayList <String> ingredients = new ArrayList<String>();
+		//ArrayList <String> ingredients = new ArrayList<String>();
 		//ingredients.add("milk");
 		//ingredients.add("salt");
 		//search("", 1, ingredients);
@@ -98,7 +98,7 @@ public class Search {
 			e.printStackTrace();
 			System.out.println("Error in ending");
 		}
-		System.out.println(recipeSteps.toString());
+		//System.out.println(recipeSteps.toString());
 		return recipeSteps;
 	}
 }

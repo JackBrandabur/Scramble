@@ -10,9 +10,10 @@ public class User {
 		//createAccount("Admin","123");
 		//System.out.println(login("Admin", "123"));
 	//}
-	
+	public static String user;
 	public static boolean login(String userName, String password) {
 		userName = userName.toLowerCase();
+		user = userName;
 		Connection myConn;
 		try {
 			myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");

@@ -56,7 +56,9 @@ public class MainMenu implements ActionListener {
 		
 		toolBar.add(ReturnButton);
 		ReturnButton.addActionListener(this);
-		toolBar.add(PantryButton);
+		if (!(User.user == null)) {
+			toolBar.add(PantryButton);
+		}
 		PantryButton.addActionListener(this);
 		buttons.add(numberOfIngredients);
 		buttons.add(prepTime);
