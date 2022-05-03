@@ -10,40 +10,93 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Pantry.
+ */
 public class Pantry implements ActionListener {
+	
+	/** The ingredients list. */
 	public static ArrayList<String> ingredientsList = new ArrayList<String>();
+	
+	/** The pantry. */
 	JFrame pantry = new JFrame("Scramble - Pantry");
 	
+	/** The add field. */
 	JTextField addField = new JTextField(10);
+	
+	/** The new ingredient. */
 	JLabel newIngredient = new JLabel("Ingredient: ");
+	
+	/** The area. */
 	JTextArea area = new JTextArea(10,20);
+	
+	/** The pane. */
 	JScrollPane pane = new JScrollPane(area);
+	
+	/** The scroll. */
 	JScrollBar scroll = new JScrollBar();
 	
+	/** The separator. */
 	JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
 	
+	/** The saved area. */
 	JTextArea savedArea = new JTextArea(10,20);
+	
+	/** The saved pane. */
 	JScrollPane savedPane = new JScrollPane(savedArea);
+	
+	/** The saved scroll. */
 	JScrollBar savedScroll = new JScrollBar();
+	
+	/** The new filter. */
 	JLabel newFilter = new JLabel("Filter Ingredient: ");
+	
+	/** The add ing. */
 	JTextField addIng = new JTextField(10);
 	
 	
+	/** The tool bar. */
 	JToolBar toolBar = new JToolBar();
+	
+	/** The tool bar 2. */
 	JToolBar toolBar2 = new JToolBar();
+	
+	/** The tool bar 3. */
 	JToolBar toolBar3 = new JToolBar();
 	
+	/** The main panel. */
 	JPanel mainPanel = new JPanel();
+	
+	/** The panel. */
 	JPanel panel = new JPanel();
+	
+	/** The panel 2. */
 	JPanel panel2 = new JPanel();
 	
+	/** The ret. */
 	JButton ret = new JButton("Return to Menu");
+	
+	/** The add. */
 	JButton add = new JButton("Add Ingredient");
+	
+	/** The save. */
 	JButton save = new JButton("Save Pantry");
+	
+	/** The add 2. */
 	JButton add2 = new JButton("Add Ingredient");
+	
+	/** The save 2. */
 	JButton save2 = new JButton("Save Filters");
+	
+	/** The clear. */
 	JButton clear = new JButton("Clear Filters");
 	
+	/**
+	 * Instantiates a new pantry.
+	 *
+	 * @param ingredientsList the ingredients list
+	 */
 	Pantry(ArrayList<String> ingredientsList) {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
@@ -94,6 +147,11 @@ public class Pantry implements ActionListener {
 		pantry.setVisible(true);
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ret) {
@@ -132,6 +190,12 @@ public class Pantry implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Ingredients DB connect.
+	 *
+	 * @param ingredients the ingredients
+	 * @param filter the filter
+	 */
 	public static void ingredientsDBConnect(String[] ingredients, boolean filter) {
 		int filterResult = 0;
 		if (filter) {
@@ -163,6 +227,9 @@ public class Pantry implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Filter ingredients DB clear.
+	 */
 	public static void filterIngredientsDBClear() {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");

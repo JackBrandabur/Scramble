@@ -10,20 +10,45 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SavedRecipes.
+ */
 public class SavedRecipes implements ActionListener {
+	
+	/** The user recipes. */
 	public static ArrayList<String> userRecipes = new ArrayList<String>();
+	
+	/** The frame. */
 	JFrame frame = new JFrame("Scramble - Recipes");
 	
+	/** The return button. */
 	JButton returnButton = new JButton("Return to Menu");
+	
+	/** The area. */
 	JTextArea area = new JTextArea(27,60);
+	
+	/** The pane. */
 	JScrollPane pane = new JScrollPane(area);
+	
+	/** The panel 1. */
 	JPanel panel1 = new JPanel(new BorderLayout());
+	
+	/** The panel 2. */
 	JPanel panel2 = new JPanel(new FlowLayout());
 	
+	/**
+	 * The main method.
+	 *
+	 * @param Args the arguments
+	 */
 	public static void main(String Args[]) {
 		SavedRecipes recipes = new SavedRecipes();
 	}
 	
+	/**
+	 * Instantiates a new saved recipes.
+	 */
 	SavedRecipes() {
 		returnButton.addActionListener(this);
 		panel2.add(returnButton);
@@ -41,6 +66,11 @@ public class SavedRecipes implements ActionListener {
 		area.setCaretPosition(0);
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == returnButton) {
@@ -49,6 +79,10 @@ public class SavedRecipes implements ActionListener {
 		}
 		
 	}
+	
+	/**
+	 * User recipes search.
+	 */
 	public static void userRecipesSearch() {
 		String user = User.user;
 		try {

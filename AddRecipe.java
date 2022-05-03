@@ -5,49 +5,111 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddRecipe.
+ */
 public class AddRecipe implements ActionListener {
 	
+	/** The new recipe. */
 	public static String[] newRecipe = new String[9];
 	
+	/** The frame. */
 	JFrame frame = new JFrame("Scramble - Add Recipe");
 	
+	/** The return button. */
 	JButton returnButton = new JButton("Return to Menu");
+	
+	/** The veiw recipes button. */
 	JButton veiwRecipesButton = new JButton("View Recipes");
+	
+	/** The add ingredient. */
 	JButton addIngredient = new JButton("Add Ingredient");
+	
+	/** The add direction. */
 	JButton addDirection = new JButton("Add Direction");
+	
+	/** The submit. */
 	JButton submit = new JButton("Submit");
 	
+	/** The grid. */
 	JPanel grid = new JPanel(new GridLayout(7,3));
+	
+	/** The panel. */
 	JPanel panel = new JPanel(new BorderLayout());
+	
+	/** The buts. */
 	JPanel buts = new JPanel();
 	
+	/** The label 1. */
 	JLabel label1 = new JLabel("  Recipe Name: ");
+	
+	/** The label 2. */
 	JLabel label2 = new JLabel("  Servings: ");
+	
+	/** The label 3. */
 	JLabel label3 = new JLabel("  Prep Time: ");
+	
+	/** The label 4. */
 	JLabel label4 = new JLabel("  Ingredients: ");
+	
+	/** The label 5. */
 	JLabel label5 = new JLabel("  Directions");
+	
+	/** The label 6. */
 	JLabel label6 = new JLabel("  Nutrition (per serving): ");
+	
+	/** The label 7. */
 	JLabel label7 = new JLabel("  Source: (optional");
 	
+	/** The field 1. */
 	JTextField field1 = new JTextField(30);
+	
+	/** The field 2. */
 	JTextField field2 = new JTextField(30);
+	
+	/** The field 3. */
 	JTextField field3 = new JTextField(30);
+	
+	/** The field 4. */
 	JTextField field4 = new JTextField(30);
+	
+	/** The field 5. */
 	JTextField field5 = new JTextField(30);
+	
+	/** The field 6. */
 	JTextField field6 = new JTextField(30);
+	
+	/** The field 7. */
 	JTextField field7 = new JTextField(30);
 	
+	/** The empty 1. */
 	JLabel empty1 = new JLabel();
+	
+	/** The empty 2. */
 	JLabel empty2 = new JLabel();
+	
+	/** The empty 3. */
 	JLabel empty3 = new JLabel();
+	
+	/** The empty 6. */
 	JLabel empty6 = new JLabel();
+	
+	/** The empty 7. */
 	JLabel empty7 = new JLabel();
 	
+	/** The publish. */
 	JCheckBox publish = new JCheckBox("Publish");
+	
+	/** The priv. */
 	JCheckBox priv = new JCheckBox("Private");
 	
+	/** The buttons. */
 	ButtonGroup buttons = new ButtonGroup();
 	
+	/**
+	 * Instantiates a new adds the recipe.
+	 */
 	AddRecipe() {
 		
 		submit.addActionListener(this);
@@ -93,6 +155,11 @@ public class AddRecipe implements ActionListener {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addIngredient) {
@@ -151,6 +218,11 @@ public class AddRecipe implements ActionListener {
 		}
 	}
 	
+	/**
+	 * User DB connect.
+	 *
+	 * @return true, if successful
+	 */
 	public static boolean userDBConnect() {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");

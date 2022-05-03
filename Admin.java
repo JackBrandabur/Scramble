@@ -10,27 +10,54 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Admin.
+ */
 public class Admin implements ActionListener {
 
+	/** The counter. */
 	public static int counter = 8;
+	
+	/** The public recipes. */
 	public static ArrayList<String> publicRecipes = new ArrayList<String>();
+	
+	/** The admin frame. */
 	JFrame adminFrame = new JFrame("Admin Operations");
 	
+	/** The bar. */
 	JToolBar bar = new JToolBar();
 	
+	/** The text. */
 	JLabel text = new JLabel("Recipes awaiting approval:");
 	
+	/** The return button. */
 	JButton returnButton = new JButton("Return to Menu");
+	
+	/** The accept recipe button. */
 	JButton acceptRecipeButton = new JButton("Approve Recipe");
+	
+	/** The decline recipe button. */
 	JButton declineRecipeButton = new JButton("Decline Recipe");
 	
+	/** The area. */
 	JTextArea area = new JTextArea(25,55);
+	
+	/** The pane. */
 	JScrollPane pane = new JScrollPane(area);
 	
+	/** The panel 1. */
 	JPanel panel1 = new JPanel(new BorderLayout()); // Combined panel
+	
+	/** The panel 2. */
 	JPanel panel2 = new JPanel(new GridLayout(1,3)); // Button panel
+	
+	/** The panel 3. */
 	JPanel panel3 = new JPanel(new FlowLayout()); // TextArea panel
 	
+	/**
+	 * Instantiates a new admin.
+	 */
 	Admin() {
 		returnButton.addActionListener(this);
 		acceptRecipeButton.addActionListener(this);
@@ -59,6 +86,11 @@ public class Admin implements ActionListener {
 		
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == returnButton) {
@@ -99,6 +131,12 @@ public class Admin implements ActionListener {
 		
 	}
 	
+	/**
+	 * Adds the recipe public.
+	 *
+	 * @param recipe the recipe
+	 * @return true, if successful
+	 */
 	public static boolean addRecipePublic(ArrayList<String> recipe) {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
@@ -116,6 +154,12 @@ public class Admin implements ActionListener {
 		return false;
 	}
 	
+	/**
+	 * Privatize recipe.
+	 *
+	 * @param recipeID the recipe ID
+	 * @return true, if successful
+	 */
 	public static boolean privatizeRecipe(int recipeID) {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
@@ -129,6 +173,9 @@ public class Admin implements ActionListener {
 		return false;
 	}
 	
+	/**
+	 * Public recipe search.
+	 */
 	public static void publicRecipeSearch() {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");

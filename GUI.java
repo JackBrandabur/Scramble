@@ -4,28 +4,54 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GUI.
+ */
 public class GUI implements ActionListener {
 	
 	// Components for the menu GUI
 	
+	/** The frame. */
 	JFrame frame = new JFrame("Scramble");
 	
+	/** The panel 1. */
 	JPanel panel1 = new JPanel();
+	
+	/** The panel 2. */
 	JPanel panel2 = new JPanel();
+	
+	/** The panel 3. */
 	JPanel panel3 = new JPanel(new BorderLayout());
+	
+	/** The panel 4. */
 	JPanel panel4 = new JPanel();
 	
+	/** The user. */
 	JLabel user = new JLabel("Username: ");
+	
+	/** The pass. */
 	JLabel pass = new JLabel("Password: ");
+	
+	/** The guest. */
 	JLabel guest = new JLabel("Search as Guest: ");
 	
+	/** The Login button. */
 	JButton LoginButton = new JButton("Login");
+	
+	/** The Signup button. */
 	JButton SignupButton = new JButton("Sign-Up");
+	
+	/** The Guest button. */
 	JButton GuestButton = new JButton("Guest");
 	
+	/** The username. */
 	JTextField username = new JTextField();
+	
+	/** The password. */
 	JPasswordField password = new JPasswordField();
 	
+	/** The login bar. */
 	JToolBar loginBar = new JToolBar();
 	
 	/**
@@ -74,12 +100,22 @@ public class GUI implements ActionListener {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		GUI gui = new GUI();
 	}
 	
 	
 
+	/**
+	 * Action performed.
+	 *
+	 * @param e the e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == LoginButton) {

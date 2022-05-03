@@ -5,8 +5,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class User.
+ */
 public class User {
+	
+	/** The user. */
 	public static String user;
+	
+	/**
+	 * Login.
+	 *
+	 * @param userName the user name
+	 * @param password the password
+	 * @return true, if successful
+	 */
 	public static boolean login(String userName, String password) {
 		userName = userName.toLowerCase();
 		user = userName;
@@ -27,6 +41,13 @@ public class User {
 		return false;
 	}
 	
+	/**
+	 * Creates the account.
+	 *
+	 * @param userName the user name
+	 * @param password the password
+	 * @return true, if successful
+	 */
 	public static boolean createAccount(String userName, String password) {
 		userName = userName.toLowerCase();
 		if (userName.equals("") || password.equals("") || userName.equals("admin") || login(userName, password)) return false;

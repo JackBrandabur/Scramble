@@ -5,11 +5,22 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 //Terminal command to access database /usr/local/mysql/bin/mysql -u root -p
 //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
 
+/**
+ * The Class Search.
+ */
 public class Search {
 	
+	/**
+	 * D B connect.
+	 *
+	 * @param item the item
+	 * @param filter the filter
+	 * @param ingredients the ingredients
+	 */
 	public static void dBConnect(String item, int filter, ArrayList <String> ingredients) {
 		File recipesFile = new File("Recipes.txt");
 		try {
@@ -76,6 +87,14 @@ public class Search {
 		}
 	}
 	
+	/**
+	 * Search.
+	 *
+	 * @param item the item
+	 * @param filter the filter
+	 * @param ingredients the ingredients
+	 * @return the array list
+	 */
 	public static ArrayList <String> search(String item, int filter, ArrayList <String> ingredients) {
 		dBConnect(item, filter, ingredients);
 		ArrayList <String> recipeSteps = new ArrayList<String>();
