@@ -12,8 +12,9 @@ public class AddRecipe implements ActionListener {
 	JFrame frame = new JFrame("Scramble - Add Recipe");
 	
 	JButton returnButton = new JButton("Return to Menu");
-	JButton addIngredient = new JButton("Add Another Ingredient");
-	JButton addDirection = new JButton("Add Another Direction");
+	JButton veiwRecipesButton = new JButton("View Recipes");
+	JButton addIngredient = new JButton("Add Ingredient");
+	JButton addDirection = new JButton("Add Direction");
 	JButton submit = new JButton("Submit");
 	
 	JPanel grid = new JPanel(new GridLayout(7,3));
@@ -51,6 +52,7 @@ public class AddRecipe implements ActionListener {
 		
 		submit.addActionListener(this);
 		returnButton.addActionListener(this);
+		veiwRecipesButton.addActionListener(this);
 		addIngredient.addActionListener(this);
 		addDirection.addActionListener(this);
 		
@@ -59,7 +61,7 @@ public class AddRecipe implements ActionListener {
 		grid.add(returnButton);
 		grid.add(label2);
 		grid.add(field2);
-		grid.add(empty2);
+		grid.add(veiwRecipesButton);
 		grid.add(label3);
 		grid.add(field3);
 		grid.add(empty3);
@@ -128,7 +130,7 @@ public class AddRecipe implements ActionListener {
 			} else {
 				newRecipe[8] = "0";
 			}
-			if (dBConnect()) {
+			if (userDBConnect()) {
 				field1.setText(null);
 				field2.setText(null);
 				field3.setText(null);
@@ -138,6 +140,10 @@ public class AddRecipe implements ActionListener {
 				field7.setText(null);
 			}
 		}
+		if (e.getSource() == veiwRecipesButton) {
+			SavedRecipes savedRecipes = new SavedRecipes();
+			frame.setVisible(false);
+		}
 		if (e.getSource() == returnButton) {
 			MainMenu menu = new MainMenu();
 			newRecipe = new String[9];
@@ -145,7 +151,7 @@ public class AddRecipe implements ActionListener {
 		}
 	}
 	
-	public static boolean dBConnect() {
+	public static boolean userDBConnect() {
 		try {
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
 			Statement mystmt = myConn.createStatement();
@@ -153,14 +159,19 @@ public class AddRecipe implements ActionListener {
 			int prepTime = Integer.parseInt(newRecipe[3]);
 			int publish = Integer.parseInt(newRecipe[8]);
 			ResultSet myRs = mystmt.executeQuery("select * from Recipes Order by RecipeID DESC");
-			ResultSet myRs2 = mystmt.executeQuery("select * from Recipes Order by RecipeID DESC");
 			myRs.next();
-			myRs2.next();
+			int recipeID1 = myRs.getInt("RecipeID");
+			ResultSet myRs2 = mystmt.executeQuery("select * from UserRecipes Order by RecipeID DESC");
+			
 			int recipeID = -1;
-			if (myRs.getInt("RecipeID") < myRs2.getInt("RecipeID")) {
-				recipeID = myRs2.getInt("RecipeID") + 1;
+			if (myRs2.next()) {
+				if (recipeID1 < myRs2.getInt("RecipeID")) {
+					recipeID = myRs2.getInt("RecipeID") + 1;
+				} else {
+					recipeID = recipeID1 + 1;
+				}
 			} else {
-				recipeID = myRs.getInt("RecipeID") + 1;
+				recipeID = recipeID1 + 1;
 			}
 			mystmt.executeUpdate("insert into UserRecipes (UserName, Publish, RecipeID, RecipeName, Servings, PrepTime, Ingredients, Directions, "
 					+ "Nutrition, Source) Values ('" + newRecipe[0] + "', '" +  publish + "', '" + recipeID + "', '" + newRecipe[1] 

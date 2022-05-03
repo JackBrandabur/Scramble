@@ -19,8 +19,9 @@ public class MainMenu implements ActionListener {
 	
 	JButton ReturnButton = new JButton ("Logout");
 	JButton PantryButton = new JButton("Virtual Pantry");
+	JButton AdminButton = new JButton ("Admin");
 	JButton SearchButton = new JButton("Search");
-	JButton addRecipe = new JButton("Add Recipe");
+	JButton addRecipe = new JButton("Add and View Recipes");
 	
 	JToolBar toolBar = new JToolBar();
 	
@@ -56,10 +57,12 @@ public class MainMenu implements ActionListener {
 		
 		toolBar.add(ReturnButton);
 		ReturnButton.addActionListener(this);
-		if (!(User.user == null)) {
-			toolBar.add(PantryButton);
-		}
+		toolBar.add(PantryButton);
 		PantryButton.addActionListener(this);
+		if (User.user.equals("admin")) {
+			toolBar.add(AdminButton);
+			AdminButton.addActionListener(this);
+		}
 		buttons.add(numberOfIngredients);
 		buttons.add(prepTime);
 		toolBar.add(filters);
@@ -69,7 +72,9 @@ public class MainMenu implements ActionListener {
 		panel2.add(toolBar);
 		
 		searchBar.setColumns(20);
-		panel3.add(addRecipe);
+		if (!(User.user == "")) {
+			panel3.add(addRecipe);
+		}
 		panel3.add(searchLabel);
 		panel3.add(searchBar);
 		panel3.add(SearchButton);
@@ -90,10 +95,15 @@ public class MainMenu implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ReturnButton) {
 			GUI login = new GUI();
+			User.user = null;
 			mainmenu.setVisible(false);
 		}
 		if (e.getSource() == PantryButton) {
 			Pantry pantry = new Pantry(Pantry.ingredientsList);
+			mainmenu.setVisible(false);
+		}
+		if (e.getSource() == AdminButton) {
+			Admin admin = new Admin();
 			mainmenu.setVisible(false);
 		}
 		if (e.getSource() == SearchButton) {
@@ -113,12 +123,8 @@ public class MainMenu implements ActionListener {
 			area.setText(null);
 			found = 0;
 			resultsFound.setText("Recipes Found: " + found);
-			//
-			// Search parameters are searchItem - recipe name, Filter - number of ingredients should be 1, 
-			//prep time should be 2, anything else will be unsorted, last parameter is an arraylist of all ingredients in pantry
 			ArrayList<String> emptyIngredients = new ArrayList<String>();
 			ArrayList<String> recipes = new ArrayList<String>();
-			//recipesTest.add("milk");
 			if (pantryIngredients) {
 				recipes = Search.search(searchItem, filter, Pantry.ingredientsList);
 			} else {

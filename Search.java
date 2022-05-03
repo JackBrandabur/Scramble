@@ -6,15 +6,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 //Terminal command to access database /usr/local/mysql/bin/mysql -u root -p
+//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
 
 public class Search {
-	public static void main (String[] args) {
-		//ArrayList <String> ingredients = new ArrayList<String>();
-		//ingredients.add("milk");
-		//ingredients.add("salt");
-		//search("", 1, ingredients);
-		//dBConnect("", 3, ingredients);
-	}
 	
 	public static void dBConnect(String item, int filter, ArrayList <String> ingredients) {
 		File recipesFile = new File("Recipes.txt");
@@ -98,7 +92,6 @@ public class Search {
 			e.printStackTrace();
 			System.out.println("Error in ending");
 		}
-		//System.out.println(recipeSteps.toString());
 		return recipeSteps;
 	}
 }

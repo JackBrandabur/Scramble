@@ -96,6 +96,7 @@ public class GUI implements ActionListener {
 			User.createAccount(userEmail, userPassword);
 		}
 		if (e.getSource() == GuestButton) {
+			User.user = "";
 			MainMenu menu = new MainMenu();
 			frame.setVisible(false);
 		}

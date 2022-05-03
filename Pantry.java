@@ -1,6 +1,11 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -40,15 +45,26 @@ public class Pantry implements ActionListener {
 	JButton clear = new JButton("Clear Filters");
 	
 	Pantry(ArrayList<String> ingredientsList) {
-		
-		for (int i = 0; i < ingredientsList.size(); i++) {
-			savedArea.append(ingredientsList.get(i));
-			savedArea.append("\n");
+		try {
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
+			Statement mystmt = myConn.createStatement();
+			ResultSet myRs = mystmt.executeQuery("SELECT * FROM PantryIngredients Where UserName = '" + User.user + "';");
+			while (myRs.next()) {
+				if (myRs.getInt("Filter") == 0) {
+					area.append(myRs.getString("Ingredient") + "\n");
+				} else {
+					savedArea.append(myRs.getString("Ingredient") + "\n");
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		ret.addActionListener(this);
 		add.addActionListener(this);
 		save.addActionListener(this);
+		save2.addActionListener(this);
 		add2.addActionListener(this);
 		clear.addActionListener(this);
 		
@@ -85,22 +101,76 @@ public class Pantry implements ActionListener {
 			pantry.setVisible(false);
 		}
 		if (e.getSource() == add) {
-			String item = addField.getText();
-			area.append(item);
-			area.append("\n");
+			String item = addField.getText().toLowerCase();
+			if (!(area.getText().contains(item))) {
+				area.append(item);
+				area.append("\n");
+			}
+			addField.setText("");
 		}
 		if (e.getSource() == save) {
-			// Code goes here to save to user data
+			String[] savedIngredients= area.getText().split("\n");
+			ingredientsDBConnect(savedIngredients, false);
+		}
+		if (e.getSource() == save2) {
+			String[] savedIngredients= savedArea.getText().split("\n");
+			ingredientsDBConnect(savedIngredients, true);
 		}
 		if (e.getSource() == add2) {
-			String item = addIng.getText();
-			ingredientsList.add(item);
-			savedArea.append(item);
-			savedArea.append("\n");
+			String item = addIng.getText().toLowerCase();
+			if (!savedArea.getText().contains(item)) {
+				ingredientsList.add(item);
+				savedArea.append(item);
+				savedArea.append("\n");
+			}
+			addIng.setText("");
 		}
 		if (e.getSource() == clear) {
 			ingredientsList = new ArrayList<String>();
 			savedArea.setText(null);
+			filterIngredientsDBClear();
+		}
+	}
+	
+	public static void ingredientsDBConnect(String[] ingredients, boolean filter) {
+		int filterResult = 0;
+		if (filter) {
+			filterResult = 1;
+		}
+		try {
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
+			Statement mystmt = myConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			ResultSet myRs = mystmt.executeQuery("SELECT * FROM PantryIngredients Where UserName = '" + User.user + "' AND Filter = " 
+			+ filterResult + ";");
+			ArrayList<String> newIngredientsList = new ArrayList<String>();
+			for (int i = 0; i < ingredients.length; i++) {
+				newIngredientsList.add(ingredients[i]);
+			}
+			while (myRs.next()) {
+				for (int i = 0; i < ingredients.length; i++) {
+					if (myRs.getString("Ingredient").equalsIgnoreCase(ingredients[i])) {
+						newIngredientsList.remove(ingredients[i]);
+					}
+				}
+			}
+			for (int i = 0; i < newIngredientsList.size(); i++) {
+				mystmt.executeUpdate("Insert into PantryIngredients (Ingredient, Filter, UserName) Values ('" + newIngredientsList.get(i).toLowerCase() + "', " + filterResult 
+						+  ", '" + User.user + "');");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void filterIngredientsDBClear() {
+		try {
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Scramble", "root", "admin123");
+			Statement mystmt = myConn.createStatement();
+			mystmt.executeUpdate("DELETE FROM PantryIngredients WHERE Filter = 1 AND UserName = '" + User.user + "';");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
